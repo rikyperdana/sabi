@@ -37,18 +37,18 @@ template(name='list')
                     td= age
                     td= address
                     td
-                        a.btn.dropdown-btn#dropAction(data-activates='actionList') Action
-                        ul.dropdown-content#actionList
+                        a.btn.dropdown-button(data-activates='drop-{{_id}}') Action
+                        ul.dropdown-content(id='drop-{{_id}}')
                             li: a(href='/read/{{_id}}') Read
                             li: a(href='/update/{{_id}}') Update
                             li: a#remove Delete
                         .modal#removeModal
                             .modal-content
-                                h4 Modal Header
-                                p Sedikit paragraf
+                                h4 Delete?
+                                p Are you sure to delete this document?
                             .modal-footer
-                                a.modal-action.modal-close.btn.red.right#doRemove Setuju
-                                a.modal-action.modal-close.btn.right Batal
+                                a.modal-action.modal-close.btn.red.right#doRemove Agree
+                                a.modal-action.modal-close.btn.right Cancel
 
 template(name='create')
     h3 Create Data

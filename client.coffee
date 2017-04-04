@@ -11,8 +11,9 @@ if Meteor.isClient
         'click #doRemove': ->
             Meteor.call 'removeData', this._id
 
-        'click #dropAction': ->
-            $('#dropAction').dropdown('open')
+        'click .dropdown-button': ->
+            $('.dropdown-button').dropdown
+                hover: true
 
     Template.read.helpers
         data: ->
