@@ -24,11 +24,16 @@ if Meteor.isClient
             selector += this._id
             $(selector).openModal()
 
-        'click #doRemove': ->
+        'click .doRemove': ->
             Meteor.call 'removeData', this._id
 
         'click .dropdown-button': ->
             $('.dropdown-button').dropdown 'open'
+
+    Template.create.events
+        'submit form': ->
+            Router.go '/list'
+            Materialize.toast 'Successfully inserted!', 4000
 
     Template.read.helpers
         data: ->
