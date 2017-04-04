@@ -1,5 +1,11 @@
 if Meteor.isClient
 
+    Template.menu.helpers
+        loggedIn: ->
+            true if Meteor.userId()
+        userEmail: ->
+            Meteor.user().emails[0].address
+
     Template.list.helpers
         datas: ->
             crud.find {}
@@ -12,8 +18,7 @@ if Meteor.isClient
             Meteor.call 'removeData', this._id
 
         'click .dropdown-button': ->
-            $('.dropdown-button').dropdown
-                hover: true
+            $('.dropdown-button').dropdown 'open'
 
     Template.read.helpers
         data: ->

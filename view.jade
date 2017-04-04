@@ -11,9 +11,12 @@ template(name='menu')
             li: a(href='/create') Create
         a.brand-logo.center Meteor CRUD
         ul.right
-            li: a Login
-            li: a Register
-            li: a Logout
+            li: a= userEmail
+            unless loggedIn
+                li: a(href='sign-in') Login
+                li: a(href='sign-up') Register
+            if loggedIn
+                li: a(href='sign-out') Logout
 
 template(name='loading')
     h5 Loading

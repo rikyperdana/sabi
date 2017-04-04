@@ -45,3 +45,10 @@ crud.allow
 Meteor.methods
     'removeData': (id) ->
         crud.remove id
+
+# Accounts Entry Config
+Meteor.startup ->
+    AccountsEntry.config
+        waitEmailVerification: false
+        dashboardRoute: '/list'
+        homeRoute: '/'
