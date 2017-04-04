@@ -82,6 +82,8 @@ template(name='create')
         type = 'insert'
         id = 'insertForm'
     )
+    a.btn.orange.right(href='/list')
+        i.mdi.mdi-keyboard-return
 
 template(name='read')
     h3 Read Data
@@ -89,6 +91,8 @@ template(name='read')
     p= data.name
     p= data.age
     p= data.address
+    a.btn.orange.right(href='/list')
+        i.mdi.mdi-keyboard-return
 
 template(name='update')
     h3 Update Data
@@ -99,3 +103,5 @@ template(name='update')
         id = 'updateForm'
         doc = data
     )
+    a.btn.orange.right(href='/list')
+        i.mdi.mdi-keyboard-return
