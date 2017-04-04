@@ -5,6 +5,9 @@ if Meteor.isClient
             true if Meteor.userId()
         userEmail: ->
             Meteor.user().emails[0].address
+    Template.menu.events
+        'click .button-collapse': ->
+            $('.button-collapse').sideNav()
 
     Template.list.helpers
         datas: ->

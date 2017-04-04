@@ -1,25 +1,40 @@
 template(name='layout')
-    +menu
-    .container
-        +yield
+    head
+        <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=no'/>
+    body
+        +menu
+        .container
+            +yield
 
 template(name='menu')
     nav.green: .nav-wrapper
-        ul.left
+        ul.left.hide-on-med-and-down
             li: a Home
             li: a(href='/list') List
             li: a(href='/create') Create
+        a.button-collapse(data-activates='slide-out')
+            i.mdi.mdi-menu
         a.brand-logo.center Meteor CRUD
-        ul.right
-            li: a= userEmail
+        ul.right.hide-on-med-and-down
             unless loggedIn
                 li: a(href='sign-in') Login
                 li: a(href='sign-up') Register
             if loggedIn
+                li: a= userEmail
                 li: a(href='sign-out') Logout
+    ul.side-nav#slide-out
+        li: a(href='/') Home
+        li: a(href='/list') List
+        li: a(href='/create') Create
+        li: .divider
+        unless loggedIn
+            li: a(href='sign-in') Login
+            li: a(href='sign-up') Register
+        if loggedIn
+            li: a(href='sign-out') Logout
 
 template(name='loading')
-    h5 Loading
+    .progress.center: .indeterminate
 
 template(name='home')
     h3 Home Page
