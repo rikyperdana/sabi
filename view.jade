@@ -1,0 +1,77 @@
+template(name='layout')
+    +menu
+    .container
+        +yield
+
+template(name='menu')
+    nav.green: .nav-wrapper
+        ul.left
+            li: a Home
+            li: a(href='/list') List
+            li: a(href='/create') Create
+        a.brand-logo.center Meteor CRUD
+        ul.right
+            li: a Login
+            li: a Register
+            li: a Logout
+
+template(name='loading')
+    h5 Loading
+
+template(name='home')
+    h3 Home Page
+
+template(name='list')
+    h3 Data List
+    table
+        thead
+            tr
+                th Name
+                th Age
+                th Address
+                th Action
+        tbody
+            each datas
+                tr
+                    td= name
+                    td= age
+                    td= address
+                    td
+                        a.btn.dropdown-btn#dropAction(data-activates='actionList') Action
+                        ul.dropdown-content#actionList
+                            li: a(href='/read/{{_id}}') Read
+                            li: a(href='/update/{{_id}}') Update
+                            li: a#remove Delete
+                        .modal#removeModal
+                            .modal-content
+                                h4 Modal Header
+                                p Sedikit paragraf
+                            .modal-footer
+                                a.modal-action.modal-close.btn.red.right#doRemove Setuju
+                                a.modal-action.modal-close.btn.right Batal
+
+template(name='create')
+    h3 Create Data
+    +quickForm(
+        collection = 'crud'
+        schema = crudS
+        type = 'insert'
+        id = 'insertForm'
+    )
+
+template(name='read')
+    h3 Read Data
+    br
+    p= data.name
+    p= data.age
+    p= data.address
+
+template(name='update')
+    h3 Update Data
+    +quickForm(
+        collection = 'crud'
+        schema = crudS
+        type = 'update'
+        id = 'updateForm'
+        doc = data
+    )
