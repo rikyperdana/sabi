@@ -67,7 +67,7 @@ template(name='list')
                                 h4 Delete?
                                 p Are you sure to delete this document?
                             .modal-footer
-                                a.modal-action.modal-close.btn.red.right(href='/delete/{{_id}}') Agree
+                                a.modal-action.modal-close.btn.red.right#doRemove Agree
                                 a.modal-action.modal-close.btn.right Cancel
     if empty
         p There's no data to be displayed.
