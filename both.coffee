@@ -21,6 +21,11 @@ Router.route '/update/:id',
     action: -> this.render 'update'
     waitOn: -> Meteor.subscribe 'data', this.params.id
 
+Router.route '/delete/:id',
+    action: ->
+        Meteor.call 'removeData', this.params.id
+        Router.go '/list'
+
 # Database Codes
 @crud = new Meteor.Collection 'crud'
 @crudS = new SimpleSchema
