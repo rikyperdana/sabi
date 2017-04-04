@@ -7,11 +7,12 @@ template(name='layout')
             +yield
 
 template(name='menu')
-    nav.green: .nav-wrapper
+    .navbar-fixed: nav.green: .nav-wrapper
         ul.left.hide-on-med-and-down
-            li: a Home
+            li: a(href='/') Home
             li: a(href='/list') List
-            li: a(href='/create') Create
+            if loggedIn
+                li: a(href='/create') Create
         a.button-collapse(data-activates='slide-out')
             i.mdi.mdi-menu
         a.brand-logo.center Meteor CRUD
@@ -41,7 +42,7 @@ template(name='home')
 
 template(name='list')
     h3 Data List
-    table
+    table.highlight
         thead
             tr
                 th Name
@@ -55,18 +56,21 @@ template(name='list')
                     td= age
                     td= address
                     td
-                        a.btn.dropdown-button(data-activates='drop-{{_id}}') Action
+                        a.btn-flat.dropdown-button(data-activates='drop-{{_id}}')
+                            i.mdi.mdi-menu
                         ul.dropdown-content(id='drop-{{_id}}')
                             li: a(href='/read/{{_id}}') Read
                             li: a(href='/update/{{_id}}') Update
-                            li: a#remove Delete
-                        .modal#removeModal
+                            li: a.openDeleteModal Delete
+                        .modal(id='deleteModal-{{_id}}')
                             .modal-content
                                 h4 Delete?
                                 p Are you sure to delete this document?
                             .modal-footer
-                                a.modal-action.modal-close.btn.red.right#doRemove Agree
+                                a.modal-action.modal-close.btn.red.right(href='/delete/{{_id}}') Agree
                                 a.modal-action.modal-close.btn.right Cancel
+    if empty
+        p There's no data to be displayed.
 
 template(name='create')
     h3 Create Data

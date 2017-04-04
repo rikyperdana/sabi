@@ -3,19 +3,26 @@ if Meteor.isClient
     Template.menu.helpers
         loggedIn: ->
             true if Meteor.userId()
+
         userEmail: ->
             Meteor.user().emails[0].address
+
     Template.menu.events
         'click .button-collapse': ->
             $('.button-collapse').sideNav()
 
     Template.list.helpers
         datas: ->
-            crud.find {}
+            crud.find {}, sort: name: 1
+
+        empty: ->
+            true if crud.find().fetch().length is 0
 
     Template.list.events
-        'click #remove': ->
-            $('#removeModal').openModal()
+        'click .openDeleteModal': ->
+            selector = '#deleteModal-'
+            selector += this._id
+            $(selector).openModal()
 
         'click #doRemove': ->
             Meteor.call 'removeData', this._id
