@@ -26,6 +26,7 @@ if Meteor.isClient
 
         'click .doRemove': ->
             Meteor.call 'removeData', this._id
+            Materialize.toast 'Data has been deleted.', 4000, 'red'
 
         'click .dropdown-button': ->
             $('.dropdown-button').dropdown 'open'
@@ -33,7 +34,7 @@ if Meteor.isClient
     Template.create.events
         'submit form': ->
             Router.go '/list'
-            Materialize.toast 'Successfully inserted!', 4000
+            Materialize.toast 'Successfully inserted!', 4000, 'blue'
 
     Template.read.helpers
         data: ->
@@ -42,3 +43,8 @@ if Meteor.isClient
     Template.update.helpers
         data: ->
             crud.findOne()
+
+    Template.update.events
+        'submit form': ->
+            Router.go '/list'
+            Materialize.toast 'Data has been updated!', 4000, 'purple'
