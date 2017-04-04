@@ -18,6 +18,9 @@ if Meteor.isClient
         empty: ->
             true if crud.find().fetch().length is 0
 
+        actionable: ->
+            true if Meteor.userId()
+
     Template.list.events
         'click .openDeleteModal': ->
             selector = '#deleteModal-'

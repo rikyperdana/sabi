@@ -48,27 +48,29 @@ template(name='list')
                 th Name
                 th Age
                 th Address
-                th Action
+                if actionable
+                    th Action
         tbody
             each datas
                 tr
                     td= name
                     td= age
                     td= address
-                    td
-                        a.btn-flat.dropdown-button(data-activates='drop-{{_id}}')
-                            i.mdi.mdi-menu
-                        ul.dropdown-content(id='drop-{{_id}}')
-                            li: a(href='/read/{{_id}}') Read
-                            li: a(href='/update/{{_id}}') Update
-                            li: a.openDeleteModal Delete
-                        .modal(id='deleteModal-{{_id}}')
-                            .modal-content
-                                h4 Delete?
-                                p Are you sure to delete this document?
-                            .modal-footer
-                                a.modal-action.modal-close.btn.red.right.doRemove Agree
-                                a.modal-action.modal-close.btn.right Cancel
+                    if actionable
+                        td
+                            a.btn-flat.dropdown-button(data-activates='drop-{{_id}}')
+                                i.mdi.mdi-menu
+                            ul.dropdown-content(id='drop-{{_id}}')
+                                li: a(href='/read/{{_id}}') Read
+                                li: a(href='/update/{{_id}}') Update
+                                li: a.openDeleteModal Delete
+                            .modal(id='deleteModal-{{_id}}')
+                                .modal-content
+                                    h4 Delete?
+                                    p Are you sure to delete this document?
+                                .modal-footer
+                                    a.modal-action.modal-close.btn.red.right.doRemove Agree
+                                    a.modal-action.modal-close.btn.right Cancel
     if empty
         p There's no data to be displayed.
 
