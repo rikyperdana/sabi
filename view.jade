@@ -91,8 +91,37 @@ template(name='read')
     p= data.name
     p= data.age
     p= data.address
+    br
+    if addDetail
+        h4 Add detail
+        +quickForm(
+            collection = 'child'
+            schema = childS
+            type = 'insert'
+            id = 'insertChild'
+        )
+        a.btn.red.right.addDetail Close
+    br
+    unless addDetail
+        a.btn.blue.right.addDetail Add Detail
+    h4 Details List
+    table
+        thead
+            tr
+                th Contact
+                th Email
+                th Remove
+        tbody
+            each childs
+                tr
+                    td= contact
+                    td= email
+                    td: a.btn.red.removeDetail: i.mdi.mdi-close
+    if empty
+        p There's no details for this data
     a.btn.orange.right(href='/list')
         i.mdi.mdi-keyboard-return
+    p .
 
 template(name='update')
     h3 Update Data

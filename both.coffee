@@ -15,7 +15,10 @@ Router.route '/create',
 
 Router.route '/read/:id',
     action: -> this.render 'read'
-    waitOn: -> Meteor.subscribe 'data', this.params.id
+    waitOn: -> [
+        Meteor.subscribe 'data', this.params.id
+        Meteor.subscribe 'childs', this.params.id
+    ]
 
 Router.route '/update/:id',
     action: -> this.render 'update'
@@ -52,3 +55,31 @@ Meteor.startup ->
         waitEmailVerification: false
         dashboardRoute: '/list'
         homeRoute: '/'
+
+# Child Database Codes
+@child = new Mongo.Collection 'child'
+@childS = new SimpleSchema
+    parent:
+        type: String
+        autoValue: ->
+            if Meteor.isClient
+                Router.current().params.id
+        autoform:
+            type: 'hidden'
+    contact:
+        type: String
+        label: 'Contact Number'
+    email:
+        type: String
+        label: 'E-Mail Address'
+
+child.attachSchema childS
+
+child.allow
+    insert: -> true
+    update: -> true
+    remove: -> true
+
+Meteor.methods
+    'removeDetail': (id) ->
+        child.remove id

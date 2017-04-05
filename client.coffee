@@ -39,9 +39,24 @@ if Meteor.isClient
             Router.go '/list'
             Materialize.toast 'Successfully inserted!', 4000, 'blue'
 
+    Template.read.onRendered ->
+        Session.set 'addDetail', false
+
     Template.read.helpers
         data: ->
             crud.findOne()
+        childs: ->
+            child.find {}
+        addDetail: ->
+            true if Session.get 'addDetail'
+        empty: ->
+            true if child.find().fetch().length is 0
+
+    Template.read.events
+        'click .addDetail': ->
+            Session.set 'addDetail', not Session.get 'addDetail'
+        'click .removeDetail': ->
+            Meteor.call 'removeDetail', this._id
 
     Template.update.helpers
         data: ->
