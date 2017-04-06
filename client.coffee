@@ -19,7 +19,8 @@ if Meteor.isClient
             term = Session.get 'listSearch'
             if term isnt ''
                 _.filter crud.find().fetch(), (doc) ->
-                    doc.name.toLowerCase().includes term
+                    doc.name.toLowerCase().includes(term) or
+                    doc.address.toLowerCase().includes term
             else
                 crud.find {}
         empty: ->
@@ -43,7 +44,10 @@ if Meteor.isClient
 
         'keyup #search': (event) ->
             Session.set 'listSearch', event.target.value.toLowerCase()
-
+         
+         'dblclick .rowData': ->
+            Router.go '/read/' + this._id
+            
     Template.read.onRendered ->
         Session.set 'addDetail', false
 

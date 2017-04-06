@@ -43,9 +43,9 @@ template(name='home')
 
 template(name='list')
     .row
-        .col.m6
+        .col.m9
             h3 Data List
-        .col.m6
+        .col.m3
             .input-field
                 input#search(placeholder='Search')
     table.highlight
@@ -58,7 +58,7 @@ template(name='list')
                     th Action
         tbody
             each datas
-                tr
+                tr.rowData
                     td= name
                     td= age
                     td= address
