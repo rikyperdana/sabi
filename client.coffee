@@ -14,13 +14,10 @@ if Meteor.isClient
     Template.home.onRendered ->
         $('.slider').slider()
 
-    Template.list.onRendered ->
-        Session.set 'listSearch', ''
-
     Template.list.helpers
         datas: ->
             term = Session.get 'listSearch'
-            if term isnt ''
+            if term isnt undefined
                 _.filter crud.find().fetch(), (doc) ->
                     doc.name.toLowerCase().includes(term) or
                     doc.address.toLowerCase().includes term
