@@ -148,7 +148,7 @@ template(name='read')
     unless addDetail
        a.btn.blue.right.addDetail Add Detail
     h4 Details List
-    table
+    table.striped.bordered
         thead
             tr
                 th Title
@@ -160,6 +160,10 @@ template(name='read')
                     td= title
                     td= amount
                     td: a.btn.red.removeDetail: i.mdi.mdi-close
+            unless empty
+                tr
+                    td: b Total
+                    td: b= totalAmount
     if empty
         p There's no details for this data
     a.btn.orange.right(href='/list')

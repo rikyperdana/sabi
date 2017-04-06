@@ -69,6 +69,11 @@ if Meteor.isClient
             data:
                 columns: [columnData],
                 type: 'spline'
+        totalAmount: ->
+            total = 0
+            for i in child.find().fetch()
+                total += i.amount
+            total
 
     Template.read.events
         'click .addDetail': ->
@@ -78,9 +83,12 @@ if Meteor.isClient
         'click .print': ->
             childsTable = [['Title', 'Amount']]
             for i in child.find().fetch()
-                row = [i.title, i.amount.toString()]
-                childsTable.push row
+                childsTable.push [i.title, i.amount.toString()]
             person = crud.findOne()
+            totalAmount = 0
+            for i in child.find().fetch()
+                totalAmount += i.amount
+            childsTable.push ['Total', totalAmount.toString()]
             pdfContent = pdfMake.createPdf
                 header: 'Data Report'
                 footer: 'from Meteor CRUD'

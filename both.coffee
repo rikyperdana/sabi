@@ -29,13 +29,13 @@ Router.route '/update/:id',
 @crudS = new SimpleSchema
     name:
         type: String
-        label: 'Patient Name'
+        label: 'Person Name'
     age:
         type: Number
-        label: 'Patient Age'
+        label: 'Person Age'
     address:
         type: String
-        label: 'Patient Address'
+        label: 'Person Address'
 
 crud.attachSchema crudS
 
@@ -68,10 +68,10 @@ Meteor.startup ->
             type: 'hidden'
     title:
         type: String
-        label: 'Case Name'
+        label: 'Detail Name'
     amount:
         type: Number
-        label: 'Medication Fee'
+        label: 'Detail Amount'
 
 child.attachSchema childS
 
