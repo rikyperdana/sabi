@@ -88,9 +88,20 @@ template(name='create')
 template(name='read')
     h3 Read Data
     br
-    p= data.name
-    p= data.age
-    p= data.address
+    .row
+        .col.m6
+            table
+                tr
+                    td: b Patient Name
+                    td= data.name
+                tr
+                    td: b Patient Age
+                    td= data.age
+                tr
+                    td: b Patient Address
+                    td= data.address
+        .col.m6
+            +c3(myChart)
     br
     if addDetail
         h4 Add detail
@@ -108,14 +119,14 @@ template(name='read')
     table
         thead
             tr
-                th Contact
-                th Email
+                th Title
+                th Amount
                 th Remove
         tbody
             each childs
                 tr
-                    td= contact
-                    td= email
+                    td= title
+                    td= amount
                     td: a.btn.red.removeDetail: i.mdi.mdi-close
     if empty
         p There's no details for this data

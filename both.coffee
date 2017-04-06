@@ -29,13 +29,13 @@ Router.route '/update/:id',
 @crudS = new SimpleSchema
     name:
         type: String
-        label: 'Your Name'
+        label: 'Patient Name'
     age:
-        type: String
-        label: 'Your Age'
+        type: Number
+        label: 'Patient Age'
     address:
         type: String
-        label: 'Your Home Address'
+        label: 'Patient Address'
 
 crud.attachSchema crudS
 
@@ -66,12 +66,12 @@ Meteor.startup ->
                 Router.current().params.id
         autoform:
             type: 'hidden'
-    contact:
+    title:
         type: String
-        label: 'Contact Number'
-    email:
-        type: String
-        label: 'E-Mail Address'
+        label: 'Case Name'
+    amount:
+        type: Number
+        label: 'Medication Fee'
 
 child.attachSchema childS
 

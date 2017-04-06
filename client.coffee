@@ -51,6 +51,15 @@ if Meteor.isClient
             true if Session.get 'addDetail'
         empty: ->
             true if child.find().fetch().length is 0
+        myChart: ->
+            name = crud.findOne().name
+            columnData = [name]
+            childs = child.find().fetch()
+            for i in childs
+                columnData.push i.amount
+            data:
+                columns: [columnData],
+                type: 'spline'
 
     Template.read.events
         'click .addDetail': ->
