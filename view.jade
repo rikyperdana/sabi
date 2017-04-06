@@ -39,6 +39,18 @@ template(name='loading')
     .progress.center: .indeterminate
 
 template(name='home')
+    br
+    .slider: ul.slides
+        li
+            img(src='http://lorempixel.com/580/250/nature/1')
+            .caption.center-align
+                h3 Meteor CRUD
+                h5.light.grey-text.text-lighten-3 Only need 4 files for all of these
+        li
+            img(src='http://lorempixel.com/580/250/nature/2')
+            .caption.left-align
+                h3 Grab it on Github
+                h5.light.grey-text.text-lighten-3 Read commits for learning
     h3 Home Page
 
 template(name='list')

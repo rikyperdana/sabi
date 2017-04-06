@@ -11,6 +11,9 @@ if Meteor.isClient
         'click .button-collapse': ->
             $('.button-collapse').sideNav()
 
+    Template.home.onRendered ->
+        $('.slider').slider()
+
     Template.list.onRendered ->
         Session.set 'listSearch', ''
 
@@ -44,10 +47,10 @@ if Meteor.isClient
 
         'keyup #search': (event) ->
             Session.set 'listSearch', event.target.value.toLowerCase()
-         
-         'dblclick .rowData': ->
+
+        'dblclick .rowData': ->
             Router.go '/read/' + this._id
-            
+
     Template.read.onRendered ->
         Session.set 'addDetail', false
 
