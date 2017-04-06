@@ -110,6 +110,11 @@ template(name='create')
         i.mdi.mdi-keyboard-return
 
 template(name='read')
+    a.btn.right.orange.tooltipped.print(
+        data-position = 'left'
+        data-delay = '50'
+        data-tooltip = 'Works on Chrome/Firefox'
+    ) Print
     h3 Read Data
     br
     .row
@@ -124,11 +129,7 @@ template(name='read')
                 tr
                     td: b Person Address
                     td= data.address
-            a.btn.orange.tooltipped.print(
-                data-position = 'right'
-                data-delay = '50'
-                data-tooltip = 'Works on Chrome/Firefox'
-            ) Print
+            +personMap
         .col.m6
             unless empty
                 +c3(myChart)
@@ -181,3 +182,7 @@ template(name='update')
     )
     a.btn.orange.right(href='/list')
         i.mdi.mdi-keyboard-return
+
+template(name='personMap')
+    h5 Location
+    #map

@@ -29,6 +29,10 @@ if Meteor.isClient
         actionable: ->
             true if Meteor.userId()
 
+    Template.list.onRendered ->
+        $('.dropdown-button').dropdown()
+        
+
     Template.list.events
         'click .openDeleteModal': ->
             selector = '#deleteModal-' + this._id
@@ -37,9 +41,6 @@ if Meteor.isClient
         'click .doRemove': ->
             Meteor.call 'removeData', this._id
             Materialize.toast 'Data has been deleted.', 4000, 'red'
-
-        'click .dropdown-button': ->
-            $('.dropdown-button').dropdown 'open'
 
         'keyup #search': (event) ->
             Session.set 'listSearch', event.target.value.toLowerCase()
@@ -89,7 +90,7 @@ if Meteor.isClient
             for i in child.find().fetch()
                 totalAmount += i.amount
             childsTable.push ['Total', totalAmount.toString()]
-            pdfContent = pdfMake.createPdf
+            pdf = pdfMake.createPdf
                 header: 'Data Report'
                 footer: 'from Meteor CRUD'
                 content: [
@@ -100,8 +101,16 @@ if Meteor.isClient
                         headerRows: 1
                         body: childsTable
                 ]
-            pdfContent.open()
+            pdf.open()
 
     Template.update.helpers
         data: ->
             crud.findOne()
+
+    Meteor.startup ->
+        Mapbox.load()
+
+    Template.personMap.onRendered ->
+        if Mapbox.loaded()
+            map = L.map 'map', 'mapbox.streets'
+            map.setView [0, 0], 1
