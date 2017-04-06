@@ -34,8 +34,7 @@ if Meteor.isClient
 
     Template.list.events
         'click .openDeleteModal': ->
-            selector = '#deleteModal-'
-            selector += this._id
+            selector = '#deleteModal-' + this._id
             $(selector).openModal()
 
         'click .doRemove': ->
