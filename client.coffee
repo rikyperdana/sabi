@@ -11,10 +11,17 @@ if Meteor.isClient
         'click .button-collapse': ->
             $('.button-collapse').sideNav()
 
+    Template.list.onRendered ->
+        Session.set 'listSearch', ''
+
     Template.list.helpers
         datas: ->
-            crud.find {}, sort: name: 1
-
+            term = Session.get 'listSearch'
+            if term isnt ''
+                _.filter crud.find().fetch(), (doc) ->
+                    doc.name.toLowerCase().includes term
+            else
+                crud.find {}
         empty: ->
             true if crud.find().fetch().length is 0
 
@@ -34,10 +41,8 @@ if Meteor.isClient
         'click .dropdown-button': ->
             $('.dropdown-button').dropdown 'open'
 
-    Template.create.events
-        'submit form': ->
-            Router.go '/list'
-            Materialize.toast 'Successfully inserted!', 4000, 'blue'
+        'keyup #search': (event) ->
+            Session.set 'listSearch', event.target.value.toLowerCase()
 
     Template.read.onRendered ->
         Session.set 'addDetail', false
@@ -52,8 +57,7 @@ if Meteor.isClient
         empty: ->
             true if child.find().fetch().length is 0
         myChart: ->
-            name = crud.findOne().name
-            columnData = [name]
+            columnData = [crud.findOne().name]
             childs = child.find().fetch()
             for i in childs
                 columnData.push i.amount
@@ -70,8 +74,3 @@ if Meteor.isClient
     Template.update.helpers
         data: ->
             crud.findOne()
-
-    Template.update.events
-        'submit form': ->
-            Router.go '/list'
-            Materialize.toast 'Data has been updated!', 4000, 'purple'
