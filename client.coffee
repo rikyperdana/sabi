@@ -25,7 +25,7 @@ if Meteor.isClient
                     doc.name.toLowerCase().includes(term) or
                     doc.address.toLowerCase().includes term
             else
-                crud.find {}
+                crud.find {}, sort: name: 1
         empty: ->
             true if crud.find().fetch().length is 0
 
@@ -48,10 +48,12 @@ if Meteor.isClient
             Session.set 'listSearch', event.target.value.toLowerCase()
 
         'dblclick .rowData': ->
-            Router.go '/read/' + this._id
+            if Meteor.userId()
+                Router.go '/read/' + this._id
 
     Template.read.onRendered ->
         Session.set 'addDetail', false
+        $('.tooltipped').tooltip delay: 50
 
     Template.read.helpers
         data: ->
@@ -76,6 +78,24 @@ if Meteor.isClient
             Session.set 'addDetail', not Session.get 'addDetail'
         'click .removeDetail': ->
             Meteor.call 'removeDetail', this._id
+        'click .print': ->
+            childsTable = [['Title', 'Amount']]
+            for i in child.find().fetch()
+                row = [i.title, i.amount.toString()]
+                childsTable.push row
+            person = crud.findOne()
+            pdfContent = pdfMake.createPdf
+                header: 'Data Report'
+                footer: 'from Meteor CRUD'
+                content: [
+                    'Person Name : ' + person.name
+                    'Person Age : ' + person.age
+                    'Person Address : ' + person.address
+                    table:
+                        headerRows: 1
+                        body: childsTable
+                ]
+            pdfContent.open()
 
     Template.update.helpers
         data: ->

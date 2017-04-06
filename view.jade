@@ -116,14 +116,19 @@ template(name='read')
         .col.m6
             table
                 tr
-                    td: b Patient Name
+                    td: b Person Name
                     td= data.name
                 tr
-                    td: b Patient Age
+                    td: b Person Age
                     td= data.age
                 tr
-                    td: b Patient Address
+                    td: b Person Address
                     td= data.address
+            a.btn.orange.tooltipped.print(
+                data-position = 'right'
+                data-delay = '50'
+                data-tooltip = 'Works on Chrome/Firefox'
+            ) Print
         .col.m6
             unless empty
                 +c3(myChart)
@@ -141,7 +146,7 @@ template(name='read')
         a.btn.red.right.addDetail Close
     br
     unless addDetail
-        a.btn.blue.right.addDetail Add Detail
+       a.btn.blue.right.addDetail Add Detail
     h4 Details List
     table
         thead
