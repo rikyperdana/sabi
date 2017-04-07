@@ -109,14 +109,11 @@ if Meteor.isClient
 
     Template.personMap.onRendered ->
         L.Icon.Default.imagePath = '/packages/bevanhunt_leaflet/images/'
-        baseMap = L.tileLayer.provider 'OpenStreetMap.DE'
-        map = L.map 'map',
-            center: [0.5, 101.44]
-            zoom: 10
-            layers: [baseMap]
-        coord = geocode.getLocation crud.findOne().address, (location) ->
-            lat = location.results[0].geometry.location.lat
-            lng = location.results[0].geometry.location.lng
-            marker = L.marker [lat, lng]
+        geocode.getLocation crud.findOne().address, (location) ->
+            latlng = location.results[0].geometry.location
+            map = L.map 'map'
+            map.setView latlng, 8
+            tile = L.tileLayer.provider 'OpenStreetMap.DE'
+            tile.addTo map
+            marker = L.marker latlng
             marker.addTo map
-            map.setView [lat, lng], 8
