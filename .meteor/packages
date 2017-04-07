@@ -33,4 +33,6 @@ session
 perak:c3
 underscore
 nilsdannemann:pdfmake
-ahio:mapbox
+pauloborges:mapbox
+bevanhunt:leaflet
+baberuth22:google-geocode

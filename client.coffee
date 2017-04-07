@@ -107,10 +107,16 @@ if Meteor.isClient
         data: ->
             crud.findOne()
 
-    Meteor.startup ->
-        Mapbox.load()
-
     Template.personMap.onRendered ->
-        if Mapbox.loaded()
-            map = L.map 'map', 'mapbox.streets'
-            map.setView [0, 0], 1
+        L.Icon.Default.imagePath = '/packages/bevanhunt_leaflet/images/'
+        baseMap = L.tileLayer.provider 'OpenStreetMap.DE'
+        map = L.map 'map',
+            center: [0.5, 101.44]
+            zoom: 10
+            layers: [baseMap]
+        coord = geocode.getLocation crud.findOne().address, (location) ->
+            lat = location.results[0].geometry.location.lat
+            lng = location.results[0].geometry.location.lng
+            marker = L.marker [lat, lng]
+            marker.addTo map
+            map.setView [lat, lng], 8
