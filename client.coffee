@@ -50,6 +50,7 @@ if Meteor.isClient
                 Router.go '/read/' + this._id
 
     Template.read.onRendered ->
+        Meteor.subscribe 'file', crud.findOne().file
         Session.set 'addDetail', false
         $('.tooltipped').tooltip delay: 50
 
@@ -75,6 +76,8 @@ if Meteor.isClient
             for i in child.find().fetch()
                 total += i.amount
             total
+        file: ->
+            files.findOne().with()
 
     Template.read.events
         'click .addDetail': ->
@@ -111,9 +114,24 @@ if Meteor.isClient
         L.Icon.Default.imagePath = '/packages/bevanhunt_leaflet/images/'
         geocode.getLocation crud.findOne().address, (location) ->
             latlng = location.results[0].geometry.location
-            map = L.map 'map'
+            map = L.map 'personMap'
             map.setView latlng, 8
             tile = L.tileLayer.provider 'OpenStreetMap.DE'
             tile.addTo map
             marker = L.marker latlng
             marker.addTo map
+
+    Template.globalMap.onRendered ->
+        L.Icon.Default.imagePath = '/packages/bevanhunt_leaflet/images/'
+        map = L.map 'globalMap'
+        map.setView [0.5, 101.44], 8
+        tile = L.tileLayer.provider 'OpenStreetMap.DE'
+        tile.addTo map
+        for i in crud.find().fetch()
+            geocode.getLocation i.address, (location) ->
+                latlng = location.results[0].geometry.location
+                marker = L.marker latlng
+                marker.addTo map
+                content = '<b>Name: '+i.name+'</b><br/>'
+                content += '<span>Address: '+i.address+'</>'
+                marker.bindPopup content

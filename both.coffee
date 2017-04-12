@@ -24,6 +24,10 @@ Router.route '/update/:id',
     action: -> this.render 'update'
     waitOn: -> Meteor.subscribe 'data', this.params.id
 
+Router.route '/map',
+    action: -> this.render 'globalMap', to:'fullWidth'
+    waitOn: -> Meteor.subscribe 'datas'
+
 # Database Codes
 @crud = new Meteor.Collection 'crud'
 @crudS = new SimpleSchema
@@ -36,6 +40,12 @@ Router.route '/update/:id',
     address:
         type: String
         label: 'Person Address'
+    file:
+        type: String
+        autoform:
+            afFieldInput:
+                type: 'fileUpload'
+                collection: 'files'
 
 crud.attachSchema crudS
 
@@ -83,3 +93,9 @@ child.allow
 Meteor.methods
     'removeDetail': (id) ->
         child.remove id
+
+@files = new FilesCollection
+    collectionName: 'files'
+    allowClientCode: true
+    onBeforeUpload: (file) ->
+        if file.size < 11000000 then true else 'Upload smaller one'
