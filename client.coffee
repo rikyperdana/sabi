@@ -75,7 +75,7 @@ if Meteor.isClient
             total = 0
             for i in child.find().fetch()
                 total += i.amount
-            total
+            numeral(total).format '0,0'
         file: ->
             files.findOne().with()
 
@@ -127,11 +127,11 @@ if Meteor.isClient
         map.setView [0.5, 101.44], 8
         tile = L.tileLayer.provider 'OpenStreetMap.DE'
         tile.addTo map
+
         for i in crud.find().fetch()
-            geocode.getLocation i.address, (location) ->
-                latlng = location.results[0].geometry.location
-                marker = L.marker latlng
-                marker.addTo map
-                content = '<b>Name: '+i.name+'</b><br/>'
-                content += '<span>Address: '+i.address+'</>'
-                marker.bindPopup content
+            createMarker = (i) ->
+                geocode.getLocation i.address, (location) ->
+                  marker = L.marker location.results[0].geometry.location
+                  marker.addTo map
+                  marker.bindPopup i.name
+            createMarker i
