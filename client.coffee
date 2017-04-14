@@ -127,11 +127,9 @@ if Meteor.isClient
         map.setView [0.5, 101.44], 8
         tile = L.tileLayer.provider 'OpenStreetMap.DE'
         tile.addTo map
-
-        for i in crud.find().fetch()
-            createMarker = (i) ->
-                geocode.getLocation i.address, (location) ->
-                  marker = L.marker location.results[0].geometry.location
-                  marker.addTo map
-                  marker.bindPopup i.name
-            createMarker i
+        createMarker = (i) ->
+            geocode.getLocation i.address, (location) ->
+                marker = L.marker location.results[0].geometry.location
+                marker.addTo map
+                marker.bindPopup '<b>'+i.name+'</b><br/><span>'+i.address+'</span>'
+        createMarker i for i in crud.find().fetch()
