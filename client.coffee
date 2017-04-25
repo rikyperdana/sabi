@@ -10,6 +10,9 @@ if Meteor.isClient
                     Router.go '/create'
                 'keluar': ->
                     Router.go '/sign-out'
+                'cari *term': (term) ->
+                    Session.set 'listSearch', term.toLowerCase()
+                    $('#search').val term
             annyang.start()
 
     Template.menu.helpers
