@@ -1,5 +1,14 @@
 if Meteor.isClient
 
+    Template.layout.onRendered ->
+        if annyang then annyang.addCommands
+            'show me data list': ->
+                Router.go '/list'
+            'create new data': ->
+                Router.go '/create'
+            'logout': ->
+                Router.go '/sign-out'
+
     Template.menu.helpers
         loggedIn: ->
             true if Meteor.userId()
