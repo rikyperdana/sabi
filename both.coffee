@@ -46,6 +46,7 @@ Router.route '/map',
             afFieldInput:
                 type: 'fileUpload'
                 collection: 'files'
+        optional: true
 
 crud.attachSchema crudS
 

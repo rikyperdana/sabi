@@ -115,7 +115,7 @@ if Meteor.isClient
         geocode.getLocation crud.findOne().address, (location) ->
             latlng = location.results[0].geometry.location
             map = L.map 'personMap'
-            map.setView latlng, 8
+            map.setView latlng, 16
             tile = L.tileLayer.provider 'OpenStreetMap.DE'
             tile.addTo map
             marker = L.marker latlng
