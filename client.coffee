@@ -10,6 +10,7 @@ if Meteor.isClient
                     Router.go '/create'
                 'keluar': ->
                     Router.go '/sign-out'
+            annyang.start()
 
     Template.menu.helpers
         loggedIn: ->
