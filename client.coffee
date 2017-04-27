@@ -1,10 +1,14 @@
 if Meteor.isClient
 
+    # For Layout ----------------------------------------------------------------------------------
     Template.layout.onRendered ->
         if annyang
             annyang.setLanguage 'id'
             annyang.start()
 
+
+
+    # For Menu ------------------------------------------------------------------------------------
     Template.menu.onRendered ->
         annyang.addCommands
             'buka daftar data': ->
@@ -25,10 +29,17 @@ if Meteor.isClient
         'click .button-collapse': ->
             $('.button-collapse').sideNav()
 
+
+
+    # For Home ------------------------------------------------------------------------------------
     Template.home.onRendered ->
         $('.slider').slider()
 
+
+
+    # For List ------------------------------------------------------------------------------------
     Template.list.onRendered ->
+        $('.dropdown-button').dropdown()
         if annyang then annyang.addCommands
             'cari *term': (term) ->
                 Session.set 'listSearch', term.toLowerCase()
@@ -49,10 +60,6 @@ if Meteor.isClient
         actionable: ->
             true if Meteor.userId()
 
-    Template.list.onRendered ->
-        $('.dropdown-button').dropdown()
-        
-
     Template.list.events
         'click .openDeleteModal': ->
             selector = '#deleteModal-' + this._id
@@ -69,6 +76,9 @@ if Meteor.isClient
             if Meteor.userId()
                 Router.go '/read/' + this._id
 
+
+
+    # For Read ------------------------------------------------------------------------------------
     Template.read.onRendered ->
         Meteor.subscribe 'file', crud.findOne().file
         Session.set 'addDetail', false
@@ -126,10 +136,16 @@ if Meteor.isClient
                 ]
             pdf.open()
 
+
+
+    # For Update ----------------------------------------------------------------------------------
     Template.update.helpers
         data: ->
             crud.findOne()
 
+
+
+    # For Person Map ------------------------------------------------------------------------------
     Template.personMap.onRendered ->
         L.Icon.Default.imagePath = '/packages/bevanhunt_leaflet/images/'
         geocode.getLocation crud.findOne().address, (location) ->
@@ -141,6 +157,9 @@ if Meteor.isClient
             marker = L.marker latlng
             marker.addTo map
 
+
+
+    # For Global Map ------------------------------------------------------------------------------
     Template.globalMap.onRendered ->
         L.Icon.Default.imagePath = '/packages/bevanhunt_leaflet/images/'
         map = L.map 'globalMap'
