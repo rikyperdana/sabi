@@ -3,17 +3,16 @@ if Meteor.isClient
     Template.layout.onRendered ->
         if annyang
             annyang.setLanguage 'id'
-            annyang.addCommands
-                'buka daftar data': ->
-                    Router.go '/list'
-                'buat data baru': ->
-                    Router.go '/create'
-                'keluar': ->
-                    Router.go '/sign-out'
-                'cari *term': (term) ->
-                    Session.set 'listSearch', term.toLowerCase()
-                    $('#search').val term
             annyang.start()
+
+    Template.menu.onRendered ->
+        annyang.addCommands
+            'buka daftar data': ->
+                Router.go '/list'
+            'buat data baru': ->
+                Router.go '/create'
+            'keluar': ->
+                Router.go '/sign-out'
 
     Template.menu.helpers
         loggedIn: ->
@@ -28,6 +27,12 @@ if Meteor.isClient
 
     Template.home.onRendered ->
         $('.slider').slider()
+
+    Template.list.onRendered ->
+        if annyang then annyang.addCommands
+            'cari *term': (term) ->
+                Session.set 'listSearch', term.toLowerCase()
+                $('#search').val term
 
     Template.list.helpers
         datas: ->
