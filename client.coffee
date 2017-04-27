@@ -44,6 +44,9 @@ if Meteor.isClient
             'cari *term': (term) ->
                 Session.set 'listSearch', term.toLowerCase()
                 $('#search').val term
+            'hapus pencarian': ->
+                Session.set 'listSearch', ''
+                $('#search').val ''
 
     Template.list.helpers
         datas: ->
@@ -147,6 +150,11 @@ if Meteor.isClient
                 $('#ageField').val words
             'alamat *words': (words) ->
                 $('#addressField').val words
+            'kosongkan': ->
+                $('#nameField').val ''
+                $('#ageField').val ''
+                $('#addressField').val ''
+
 
 
     # For Update ----------------------------------------------------------------------------------
