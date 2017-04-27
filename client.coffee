@@ -138,6 +138,17 @@ if Meteor.isClient
 
 
 
+    # For Create ----------------------------------------------------------------------------------
+    Template.create.onRendered ->
+        annyang.addCommands
+            'nama *words': (words) ->
+                $('#nameField').val words
+            'umur *words': (words) ->
+                $('#ageField').val words
+            'alamat *words': (words) ->
+                $('#addressField').val words
+
+
     # For Update ----------------------------------------------------------------------------------
     Template.update.helpers
         data: ->

@@ -36,12 +36,15 @@ Router.route '/map',
     name:
         type: String
         label: 'Person Name'
+        autoform: id: 'nameField'
     age:
         type: Number
         label: 'Person Age'
+        autoform: id: 'ageField'
     address:
         type: String
         label: 'Person Address'
+        autoform: id: 'addressField'
     file:
         type: String
         autoform:
@@ -86,12 +89,16 @@ child.allow
     onBeforeUpload: (file) ->
         if file.size < 11000000 then true else 'Upload smaller one'
 
+
+
 # Methods Codes -----------------------------------------------------------------------------------
 Meteor.methods
     'removeData': (id) ->
         crud.remove id
     'removeDetail': (id) ->
         child.remove id
+
+
 
 # Accounts Entry Config ---------------------------------------------------------------------------
 Meteor.startup ->
