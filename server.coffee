@@ -9,5 +9,5 @@ if Meteor.isServer
     Meteor.publish 'childs', (parentId) ->
         child.find parent: parentId
 
-    Meteor.publish 'files', ->
-        files.find()
+    Meteor.publish 'file', (id) ->
+        files.find _id: id

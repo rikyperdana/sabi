@@ -109,6 +109,7 @@ if Meteor.isClient
                 total += i.amount
             numeral(total).format '0,0'
         file: ->
+            Meteor.subscribe 'file', crud.findOne().fileId
             files.findOne()
 
     Template.read.events

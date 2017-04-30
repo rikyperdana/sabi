@@ -18,7 +18,6 @@ Router.route '/read/:id',
     waitOn: -> [
         Meteor.subscribe 'data', this.params.id
         Meteor.subscribe 'childs', this.params.id
-        Meteor.subscribe 'files'
     ]
 
 Router.route '/update/:id',
