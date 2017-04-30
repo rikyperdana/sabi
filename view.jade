@@ -121,16 +121,17 @@ template(name='read')
     br
     .row
         .col.m6
-            table
-                tr
-                    td: b Person Name
-                    td= data.name
-                tr
-                    td: b Person Age
-                    td= data.age
-                tr
-                    td: b Person Address
-                    td= data.address
+            with data
+                table
+                    tr
+                        td: b Person Name
+                        td= name
+                    tr
+                        td: b Person Age
+                        td= age
+                    tr
+                        td: b Person Address
+                        td= address
             +personMap
         .col.m6
             with file

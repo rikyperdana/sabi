@@ -63,6 +63,9 @@ crud.allow
 
 @files = new FS.Collection 'files',
     stores: [new FS.Store.GridFS 'filesStore']
+    filter:
+        maxSize: 1048576
+        allow: extensions: ['png']
 files.allow
     insert: -> true
     update: -> true
