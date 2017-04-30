@@ -31,14 +31,6 @@ Router.route '/map',
 
 
 # Database Codes ----------------------------------------------------------------------------------
-@files = new FS.Collection 'files',
-    stores: [new FS.Store.GridFS 'filesStore']
-files.allow
-    insert: -> true
-    update: -> true
-    download: -> true
-    fetch: null
-
 @crud = new Meteor.Collection 'crud'
 @crudS = new SimpleSchema
     name:
@@ -52,19 +44,30 @@ files.allow
     address:
         type: String
         label: 'Person Address'
-        autoform: id: 'addressField'
+        autoform:
+            id: 'addressField'
     fileId:
         type: String
         autoform:
             afFieldInput:
                 type: 'cfs-file'
                 collection: 'files'
+        optional: true
 
 crud.attachSchema crudS
 crud.allow
     insert: -> true
     update: -> true
     remove: -> true
+
+
+@files = new FS.Collection 'files',
+    stores: [new FS.Store.GridFS 'filesStore']
+files.allow
+    insert: -> true
+    update: -> true
+    download: -> true
+    fetch: null
 
 
 @child = new Mongo.Collection 'child'
@@ -95,6 +98,8 @@ child.allow
 Meteor.methods
     'removeData': (id) ->
         crud.remove id
+    'removeFile': (fileId) ->
+        files.remove fileId
     'removeDetail': (id) ->
         child.remove id
 

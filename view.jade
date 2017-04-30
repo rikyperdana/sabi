@@ -134,6 +134,7 @@ template(name='read')
             +personMap
         .col.m6
             with file
+                span: b Document:
                 a(href='{{url}}' target='_blank')= name
             unless empty
                 +c3(myChart)

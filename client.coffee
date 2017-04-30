@@ -70,7 +70,7 @@ if Meteor.isClient
 
         'click .doRemove': ->
             Meteor.call 'removeData', this._id
-            Materialize.toast 'Data has been deleted.', 4000, 'red'
+            Meteor.call 'removeFile', this.fileId
 
         'keyup #search': (event) ->
             Session.set 'listSearch', event.target.value.toLowerCase()
