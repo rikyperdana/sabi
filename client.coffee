@@ -83,7 +83,6 @@ if Meteor.isClient
 
     # For Read ------------------------------------------------------------------------------------
     Template.read.onRendered ->
-        Meteor.subscribe 'file', crud.findOne().file
         Session.set 'addDetail', false
         $('.tooltipped').tooltip delay: 50
 
@@ -110,7 +109,7 @@ if Meteor.isClient
                 total += i.amount
             numeral(total).format '0,0'
         file: ->
-            files.findOne().with()
+            files.findOne()
 
     Template.read.events
         'click .addDetail': ->

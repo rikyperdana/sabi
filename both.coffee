@@ -18,6 +18,7 @@ Router.route '/read/:id',
     waitOn: -> [
         Meteor.subscribe 'data', this.params.id
         Meteor.subscribe 'childs', this.params.id
+        Meteor.subscribe 'files'
     ]
 
 Router.route '/update/:id',
@@ -31,6 +32,14 @@ Router.route '/map',
 
 
 # Database Codes ----------------------------------------------------------------------------------
+@files = new FS.Collection 'files',
+    stores: [new FS.Store.GridFS 'filesStore']
+files.allow
+    insert: -> true
+    update: -> true
+    download: -> true
+    fetch: null
+
 @crud = new Meteor.Collection 'crud'
 @crudS = new SimpleSchema
     name:
@@ -45,13 +54,12 @@ Router.route '/map',
         type: String
         label: 'Person Address'
         autoform: id: 'addressField'
-    file:
+    fileId:
         type: String
         autoform:
             afFieldInput:
-                type: 'fileUpload'
+                type: 'cfs-file'
                 collection: 'files'
-        optional: true
 
 crud.attachSchema crudS
 crud.allow
@@ -81,13 +89,6 @@ child.allow
     insert: -> true
     update: -> true
     remove: -> true
-
-
-@files = new FilesCollection
-    collectionName: 'files'
-    allowClientCode: true
-    onBeforeUpload: (file) ->
-        if file.size < 11000000 then true else 'Upload smaller one'
 
 
 

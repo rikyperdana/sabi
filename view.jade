@@ -133,7 +133,8 @@ template(name='read')
                     td= data.address
             +personMap
         .col.m6
-            a(href='{{file.link}}')= file.name
+            with file
+                a(href='{{url}}' target='_blank')= name
             unless empty
                 +c3(myChart)
             if empty

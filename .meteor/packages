@@ -35,7 +35,8 @@ underscore
 nilsdannemann:pdfmake
 bevanhunt:leaflet
 baberuth22:google-geocode
-ostrio:files
-ostrio:autoform-files
 numeral:numeral
 osxi:annyang
+cfs:standard-packages
+cfs:gridfs
+cfs:autoform
