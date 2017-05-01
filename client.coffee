@@ -40,7 +40,7 @@ if Meteor.isClient
     # For List ------------------------------------------------------------------------------------
     Template.list.onRendered ->
         $('.dropdown-button').dropdown()
-        if annyang then annyang.addCommands
+        annyang.addCommands
             'cari *term': (term) ->
                 Session.set 'listSearch', term.toLowerCase()
                 $('#search').val term
@@ -150,6 +150,8 @@ if Meteor.isClient
                 $('#ageField').val words
             'alamat *words': (words) ->
                 $('#addressField').val words
+            'simpan': ->
+                $('form :submit').click()
             'kosongkan': ->
                 $('#nameField').val ''
                 $('#ageField').val ''
